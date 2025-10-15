@@ -1,15 +1,21 @@
+// models/User.model.ts
 import {
   Table,
   Column,
   Model,
   DataType,
-  Default,
   Unique,
+  ForeignKey,
+  BelongsTo,
+  BeforeCreate,
+  BeforeUpdate,
 } from "sequelize-typescript";
+import bcrypt from "bcrypt";
+import Role from "./Role.model.js";
 
 @Table({
   tableName: "users",
-  timestamps: true, // sin createdAt/updatedAt
+  timestamps: true,
 })
 class User extends Model {
   @Unique
@@ -23,16 +29,30 @@ class User extends Model {
     type: DataType.STRING,
     allowNull: false,
   })
-  declare password: string; // se recomienda guardar el hash
+  declare password: string; // Hash
 
+  @ForeignKey(() => Role)
   @Column({
-    type: DataType.STRING,
+    type: DataType.INTEGER,
     allowNull: false,
   })
-  declare role: string;
-  // Opcional: si quieres tipar explícitamente los campos automáticos
-  declare readonly createdAt: Date;
-  declare readonly updatedAt: Date;
+  declare roleId: number;
+
+  @BelongsTo(() => Role)
+  declare role: Role;
+
+  // Hooks: hash automático de contraseñas
+  @BeforeCreate
+  @BeforeUpdate
+  static async hashPassword(user: User) {
+    if (user.changed("password")) {
+      user.password = await bcrypt.hash(user.password, 10);
+    }
+  }
+
+  async validatePassword(password: string): Promise<boolean> {
+    return await bcrypt.compare(password, this.password);
+  }
 }
 
 export default User;
