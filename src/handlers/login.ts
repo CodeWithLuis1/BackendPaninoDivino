@@ -1,6 +1,6 @@
 // handlers/auth.ts
 import { Request, Response } from "express";
-import User from "../models/User.model.js";
+import User from "../models/adminModels/User.model.js";
 import jwt from "jsonwebtoken";
 
 export const login = async (req: Request, res: Response) => {

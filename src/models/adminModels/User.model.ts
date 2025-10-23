@@ -1,4 +1,3 @@
-// models/User.model.ts
 import {
   Table,
   Column,
@@ -18,6 +17,12 @@ import Role from "./Role.model.js";
   timestamps: true,
 })
 class User extends Model {
+  @Column({
+    type: DataType.STRING(100),
+    allowNull: false,
+  })
+  declare name: string;
+
   @Unique
   @Column({
     type: DataType.STRING(50),
@@ -45,7 +50,8 @@ class User extends Model {
   @BeforeCreate
   @BeforeUpdate
   static async hashPassword(user: User) {
-    if (user.changed("password")) {
+    const isHashed = /^\$2[aby]\$/.test(user.password); // detecta si ya es bcrypt
+    if (!isHashed) {
       user.password = await bcrypt.hash(user.password, 10);
     }
   }

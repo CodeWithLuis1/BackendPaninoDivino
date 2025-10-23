@@ -1,27 +1,25 @@
 // seed/defaultUser.ts
-import User from "../models/User.model.js";
-import Role from "../models/Role.model.js";
+import User from "../models/adminModels/User.model.js";
+import Role from "../models/adminModels/Role.model.js";
 
-export async function createDefaultUser() {
-  // Creamos roles básicos si no existen
-  const [adminRole] = await Role.findOrCreate({
-    where: { name: "admin" },
-    defaults: { name: "admin" },
-  });
+export const createDefaultUser = async () => {
+  const adminRole = await Role.findOne({ where: { name: "admin" } });
 
-  // Verificamos si ya existe el usuario Panino divino
-  const existingUser = await User.findOne({
-    where: { username: "admin" },
-  });
-
-  if (!existingUser) {
-    await User.create({
-      username: "admin",
-      password: "admin", // se hashea automáticamente
-      roleId: adminRole.id,
-    });
-    console.log(" Usuario por defecto creado.");
-  } else {
-    console.log("ℹUsuario por defecto ya existe.");
+  if (!adminRole) {
+    console.error("No existe el rol 'admin'. Crea los roles antes de los usuarios.");
+    return;
   }
-}
+
+  // Evitar duplicados
+  const adminExists = await User.findOne({ where: { username: "admin" } });
+  if (adminExists) return;
+
+  await User.create({
+    name: "Administrador",
+    username: "admin",
+    password: "admin", // <- texto plano, el hook lo hashea
+    roleId: adminRole.id,
+  });
+
+  console.log("Usuario admin creado correctamente");
+};
