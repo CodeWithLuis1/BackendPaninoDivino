@@ -9,7 +9,7 @@ export const createCategory = async (req: Request, res: Response) => {
     if (!name) {
       return res.status(400).json({
         statusCode: 400,
-        message: "El nombre de la categoría es obligatorio",
+        error: "El nombre de la categoría es obligatorio",
       });
     }
     // Check if category already exists
@@ -17,7 +17,7 @@ export const createCategory = async (req: Request, res: Response) => {
     if (categoryExists) {
       return res.status(409).json({
         statusCode: 409,
-        message: "La categoría ya existe",
+        error: "La categoría ya existe",
       });
     }
     // Create category
@@ -30,8 +30,8 @@ export const createCategory = async (req: Request, res: Response) => {
     console.error(error);
     return res.status(500).json({
       statusCode: 500,
-      message: "Error al crear la categoría",
-      error: error.message,
+      error: "Error al crear la categoría",
+      details: error.message,
     });
   }
 };
@@ -72,8 +72,8 @@ export const getCategories = async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       statusCode: 500,
-      message: "Error al obtener las categorías",
-      error: error.message,
+      error: "Error al obtener las categorías",
+      details: error.message,
     });
   }
 };
@@ -88,7 +88,7 @@ export const getCategoryById = async (req: Request, res: Response) => {
     if (!category) {
       return res.status(404).json({
         statusCode: 404,
-        message: "Categoría no encontrada",
+        error: "Categoría no encontrada",
       });
     }
     res.json({
@@ -99,8 +99,8 @@ export const getCategoryById = async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       statusCode: 500,
-      message: "Error al obtener la categoría",
-      error: error.message,
+      error: "Error al obtener la categoría",
+      details: error.message,
     });
   }
 };

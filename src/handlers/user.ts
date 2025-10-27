@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/adminModels/User.model.js";
+import Role from "../models/adminModels/Role.model.js";
 
 export const createUser = async (req: Request, res: Response) => {
   try {
@@ -8,7 +9,7 @@ export const createUser = async (req: Request, res: Response) => {
     if (userExists) {
       return res.status(409).json({
         statusCode: 409,
-        message: "El nombre de usuario ya existe",
+        error: "El nombre de usuario ya existe",
       });
     }
     await User.create({
@@ -25,8 +26,8 @@ export const createUser = async (req: Request, res: Response) => {
     console.error(error);
     return res.status(500).json({
       statusCode: 500,
-      message: "Error al crear el usuario",
-      error: error.message,
+      error: "Error al crear el usuario",
+      details: error.message,
     });
   }
 };
@@ -45,10 +46,22 @@ export const getUser = async (req: Request, res: Response) => {
         limit,
         offset,
         order: [["id", "ASC"]],
+        include: [{
+          model:Role,
+          attributes: ['name']
+        }],
       });
       lastPage = Math.ceil(total / limit);
     } else {
-      users = await User.findAll({ order: [["id", "ASC"]] });
+      users = await User.findAll({ order: [["id", "ASC"]],
+        include: [
+          {
+            model: Role,
+            attributes: ["name"],
+          },
+        ],
+      });
+
       total = users.length;
     }
     res.json({
@@ -62,8 +75,8 @@ export const getUser = async (req: Request, res: Response) => {
     console.error(error);
     res.status(500).json({
       statusCode: 500,
-      message: "Error al obtener los usuarios",
-      error: error.message,
+      error: "Error al obtener los usuarios",
+      details: error.message,
     });
   }
 };
@@ -83,7 +96,7 @@ export const getUserById = async (req: Request, res: Response) => {
       data: user,
     });
   } catch (error: any) {
-    console.error(error);
+    console.error(error);//This line is very important to debug the error in the server console
     res.status(500).json({
       statusCode: 500,
       message: "Error al obtener el usuario",
