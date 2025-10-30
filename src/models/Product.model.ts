@@ -35,7 +35,7 @@ class Product extends Model {
   @Column(DataType.TEXT)
   declare description?: string;
 
-  @Column(DataType.STRING)
+  @Column(DataType.TEXT)
   declare image?: string;
 
   @Column({
