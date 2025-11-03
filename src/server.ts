@@ -11,6 +11,7 @@ import roleRouter from "./routes/role.js";
 import { createDefaultRoles } from "./seed/DefaultRol.js";
 import categoryRouter from "./routes/productCategory.js";
 import productRouter from "./routes/products.js";
+import orderRouter from "./routes/orders.js";
 
 //conectar a base de datos
 async function connectDB() {
@@ -41,7 +42,7 @@ server.use("/api/auth", authRouter);
 server.use("/api/role", roleRouter);
 server.use("/api/category", categoryRouter);
 server.use("/api/products", productRouter);
-
+server.use("/api/orders", orderRouter);
 
 
 export default server;

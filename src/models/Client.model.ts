@@ -16,7 +16,7 @@ class Client extends Model {
     type: DataType.STRING(100),
     allowNull: false,
   })
-  declare name: string;
+  declare client_name: string;
 }
 
 export default Client;
