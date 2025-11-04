@@ -31,5 +31,5 @@ const __dirname = dirname(__filename);
 const db = new Sequelize(process.env.DATABASE_URL!,{
     models: [join(__dirname, '../models/*.ts')]
 })
- db.addModels([User,Role,Category,Client,ExtraIngredients,Ingredient,Product,ProductExtraIngredient,ProductSauce,ProductVariation,Sauce,Order,OrderItem,OrderItemExtra,OrderItemRemovedIngredient,OrderItemSauce,OrderItemVariation,Payment]);
+ db.addModels([User,Role,Category,Client,ExtraIngredients,Ingredient,Product,ProductExtraIngredient,ProductSauce,ProductVariation,Sauce,Order,OrderItem,OrderItemExtra,OrderItemRemovedIngredient,OrderItemSauce,OrderItemVariation,Payment,ProductExtraIngredient]);
 export default db
