@@ -3,53 +3,37 @@ import {
   Column,
   Model,
   DataType,
-  ForeignKey,
-  BelongsTo,
   HasMany,
 } from 'sequelize-typescript';
-import Category from './Category.model.js';
 import ProductIngredientLink from './ProductIngredientLink.model.js';
 
 @Table({
-  tableName: 'products',
-  timestamps: false,
+  tableName: 'menu_ingredients', 
+  timestamps: true,
 })
-class Product extends Model {
+class MenuIngredient extends Model {
   @Column({
     type: DataType.INTEGER,
     autoIncrement: true,
     primaryKey: true,
   })
-  declare id_product: number;
-
-  @ForeignKey(() => Category)
-  @Column(DataType.INTEGER)
-  declare id_category: number;
-
-  @BelongsTo(() => Category)
-  declare category: Category;
+  declare ingredient_id: number;
 
   @Column({
     type: DataType.STRING(100),
     allowNull: false,
   })
-  declare name: string;
-
-  @Column(DataType.TEXT)
-  declare description?: string;
-
-  @Column(DataType.TEXT)
-  declare image?: string;
+  declare ingredient_name: string;
 
   @Column({
     type: DataType.BOOLEAN,
     defaultValue: true,
   })
-  declare active: boolean;
+  declare is_active: boolean;
 
   // 🔗 Relaciones
   @HasMany(() => ProductIngredientLink)
   declare productIngredientLinks: ProductIngredientLink[];
 }
 
-export default Product;
+export default MenuIngredient;

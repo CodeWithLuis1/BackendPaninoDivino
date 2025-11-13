@@ -65,25 +65,13 @@ export const getProducts = async (req: Request, res: Response) => {
         limit,
         offset,
         order: [["id_product", "ASC"]],
-        include: [
-          "category",
-          "variations",
-          "ingredients",
-          "sauces",
-          "extraIngredients",
-        ],
+        include: ["category", "productIngredientLinks"],
       });
       lastPage = Math.ceil(total / limit);
     } else {
       products = await Product.findAll({
         order: [["id_product", "ASC"]],
-        include: [
-          "category",
-          "variations",
-          "ingredients",
-          "sauces",
-          "extraIngredients",
-        ],
+        include: ["category", "productIngredientLinks"],
       });
       total = products.length;
     }
@@ -108,13 +96,7 @@ export const getProductById = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     const product = await Product.findByPk(id, {
-      include: [
-        "category",
-        "variations",
-        "ingredients",
-        "sauces",
-        "extraIngredients",
-      ],
+    include: ["category", "productIngredientLinks"],
     });
     if (!product) {
       return res.status(404).json({

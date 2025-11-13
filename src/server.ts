@@ -11,9 +11,8 @@ import roleRouter from "./routes/role.js";
 import { createDefaultRoles } from "./seed/DefaultRol.js";
 import categoryRouter from "./routes/productCategory.js";
 import productRouter from "./routes/products.js";
-import orderRouter from "./routes/orders.js";
-import ingredientRouter from "./routes/ingredients.js";
-import extraIngredientRoutes from "./routes/ExtraIngredientRoutes.js";
+import ingredientRouter from "./routes/MenuIngredientRoutes.js";
+import productIngredientRouter from "./routes/productIngredientLinkRoutes.js";
 
 //conectar a base de datos
 async function connectDB() {
@@ -44,9 +43,8 @@ server.use("/api/auth", authRouter);
 server.use("/api/role", roleRouter);
 server.use("/api/category", categoryRouter);
 server.use("/api/products", productRouter);
-server.use("/api/orders", orderRouter);
 server.use("/api/ingredients", ingredientRouter);
-server.use("/api/extra-ingredients", extraIngredientRoutes);
+server.use("/api/productIngredient", productIngredientRouter);
 
 
 
