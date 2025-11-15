@@ -1,5 +1,4 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo, Default } from 'sequelize-typescript';
-import Order from './Order.model.js';
+import { Table, Column, Model, DataType, Default } from 'sequelize-typescript';
 
 export type PaymentMethod = 'cash' | 'card';
 export type PaymentStatus = 'initiated' | 'captured' | 'failed' | 'voided';
@@ -9,21 +8,29 @@ export default class Payment extends Model {
   @Column({ type: DataType.INTEGER, autoIncrement: true, primaryKey: true })
   declare id_payment: number;
 
-  @ForeignKey(() => Order)
+  // ❌ QUITAMOS @ForeignKey(() => Order)
   @Column(DataType.INTEGER)
   declare id_order: number;
 
-  @BelongsTo(() => Order) declare order: Order;
+  @Column(DataType.ENUM('cash','card')) 
+  declare method: PaymentMethod;
 
-  @Column(DataType.ENUM('cash','card')) declare method: PaymentMethod;
+  @Default(0) @Column(DataType.INTEGER) 
+  declare amount_cents: number;
 
-  @Default(0) @Column(DataType.INTEGER) declare amount_cents: number; // monto cobrado
-  @Default(0) @Column(DataType.INTEGER) declare tip_cents: number;
-  @Default(0) @Column(DataType.INTEGER) declare change_cents: number;
+  @Default(0) @Column(DataType.INTEGER) 
+  declare tip_cents: number;
+
+  @Default(0) @Column(DataType.INTEGER) 
+  declare change_cents: number;
 
   @Default('initiated')
   @Column(DataType.ENUM('initiated','captured','failed','voided'))
   declare status: PaymentStatus;
 
-  @Column(DataType.STRING(60)) declare reference: string | null; // id terminal, token, etc.
+  @Column(DataType.STRING(60)) 
+  declare reference: string | null;
+
+  // Solo para TS (sin decoradores)
+  declare order?: any;
 }
