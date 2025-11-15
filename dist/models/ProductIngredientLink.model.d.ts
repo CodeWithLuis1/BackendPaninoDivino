@@ -1,6 +1,4 @@
 import { Model } from 'sequelize-typescript';
-import Product from './Product.model.js';
-import MenuIngredient from './MenuIngredient.model.js';
 declare class ProductIngredientLink extends Model {
     product_ingredient_link_id: number;
     product_id: number;
@@ -10,7 +8,7 @@ declare class ProductIngredientLink extends Model {
     is_removable: boolean;
     additional_price: number;
     is_active: boolean;
-    linkedProduct: Product;
-    linkedIngredient: MenuIngredient;
+    linkedProduct?: any;
+    linkedIngredient?: any;
 }
 export default ProductIngredientLink;

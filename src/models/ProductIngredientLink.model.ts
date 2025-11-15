@@ -1,13 +1,4 @@
-import {
-  Table,
-  Column,
-  Model,
-  DataType,
-  ForeignKey,
-  BelongsTo,
-} from 'sequelize-typescript';
-import Product from './Product.model.js';
-import MenuIngredient from './MenuIngredient.model.js';
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
 @Table({
   tableName: 'product_ingredient_links',
@@ -21,11 +12,9 @@ class ProductIngredientLink extends Model {
   })
   declare product_ingredient_link_id: number;
 
-  @ForeignKey(() => Product)
   @Column(DataType.INTEGER)
   declare product_id: number;
 
-  @ForeignKey(() => MenuIngredient)
   @Column(DataType.INTEGER)
   declare ingredient_id: number;
 
@@ -59,12 +48,9 @@ class ProductIngredientLink extends Model {
   })
   declare is_active: boolean;
 
-  // 🔗 Relaciones
-  @BelongsTo(() => Product, { as: 'linkedProduct' })
-  declare linkedProduct: Product;
-
-  @BelongsTo(() => MenuIngredient, { as: 'linkedIngredient' })
-  declare linkedIngredient: MenuIngredient;
+  // Propiedades para TS (sin decoradores)
+  declare linkedProduct?: any;
+  declare linkedIngredient?: any;
 }
 
 export default ProductIngredientLink;

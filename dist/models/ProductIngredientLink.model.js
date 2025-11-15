@@ -7,9 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo, } from 'sequelize-typescript';
-import Product from './Product.model.js';
-import MenuIngredient from './MenuIngredient.model.js';
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
 let ProductIngredientLink = class ProductIngredientLink extends Model {
 };
 __decorate([
@@ -21,12 +19,10 @@ __decorate([
     __metadata("design:type", Number)
 ], ProductIngredientLink.prototype, "product_ingredient_link_id", void 0);
 __decorate([
-    ForeignKey(() => Product),
     Column(DataType.INTEGER),
     __metadata("design:type", Number)
 ], ProductIngredientLink.prototype, "product_id", void 0);
 __decorate([
-    ForeignKey(() => MenuIngredient),
     Column(DataType.INTEGER),
     __metadata("design:type", Number)
 ], ProductIngredientLink.prototype, "ingredient_id", void 0);
@@ -65,14 +61,6 @@ __decorate([
     }),
     __metadata("design:type", Boolean)
 ], ProductIngredientLink.prototype, "is_active", void 0);
-__decorate([
-    BelongsTo(() => Product, { as: 'linkedProduct' }),
-    __metadata("design:type", Product)
-], ProductIngredientLink.prototype, "linkedProduct", void 0);
-__decorate([
-    BelongsTo(() => MenuIngredient, { as: 'linkedIngredient' }),
-    __metadata("design:type", MenuIngredient)
-], ProductIngredientLink.prototype, "linkedIngredient", void 0);
 ProductIngredientLink = __decorate([
     Table({
         tableName: 'product_ingredient_links',
