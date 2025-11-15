@@ -7,8 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo, Default } from 'sequelize-typescript';
-import Order from './Order.model.js';
+import { Table, Column, Model, DataType, Default } from 'sequelize-typescript';
 let Payment = class Payment extends Model {
 };
 __decorate([
@@ -16,14 +15,9 @@ __decorate([
     __metadata("design:type", Number)
 ], Payment.prototype, "id_payment", void 0);
 __decorate([
-    ForeignKey(() => Order),
     Column(DataType.INTEGER),
     __metadata("design:type", Number)
 ], Payment.prototype, "id_order", void 0);
-__decorate([
-    BelongsTo(() => Order),
-    __metadata("design:type", Order)
-], Payment.prototype, "order", void 0);
 __decorate([
     Column(DataType.ENUM('cash', 'card')),
     __metadata("design:type", String)
