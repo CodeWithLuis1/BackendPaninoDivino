@@ -8,7 +8,6 @@ import {
 
 const ingredientRouter = Router();
 
-
 // Crear ingrediente global
 ingredientRouter.post(
   "/",

@@ -9,6 +9,9 @@ import Client from "../models/Client.model.js";
 import Product from "../models/Product.model.js";
 import ProductIngredientLink from "../models/ProductIngredientLink.model.js";
 import MenuIngredient from "../models/MenuIngredient.model.js";
+import Order from "../models/Order.model.js"
+import Payment from "../models/Payment.model.js"
+import OrderItemIngredient from "../models/OrderItemIngredient.model.js"
 
 
 
@@ -20,5 +23,5 @@ const __dirname = dirname(__filename);
 const db = new Sequelize(process.env.DATABASE_URL!,{
     models: [join(__dirname, '../models/*.ts')]
 })
- db.addModels([User,Role,Category,Client,Product,ProductIngredientLink,MenuIngredient]);
+ db.addModels([User,Role,Category,Client,Product,ProductIngredientLink,MenuIngredient,Order,Payment,OrderItemIngredient]);
 export default db

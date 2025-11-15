@@ -37,6 +37,12 @@ class Product extends Model {
 
   @Column(DataType.TEXT)
   declare description?: string;
+  
+  @Column({
+    type: DataType.DECIMAL(10, 2),
+    allowNull: false,
+  })
+  declare price: string;
 
   @Column(DataType.TEXT)
   declare image?: string;
@@ -47,9 +53,9 @@ class Product extends Model {
   })
   declare active: boolean;
 
-  // 🔗 Relaciones
-  @HasMany(() => ProductIngredientLink)
-  declare productIngredientLinks: ProductIngredientLink[];
+@HasMany(() => ProductIngredientLink, { as: "productIngredientLinks" })
+declare productIngredientLinks: ProductIngredientLink[];
+
 }
 
 export default Product;

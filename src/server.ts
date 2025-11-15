@@ -13,6 +13,8 @@ import categoryRouter from "./routes/productCategory.js";
 import productRouter from "./routes/products.js";
 import ingredientRouter from "./routes/MenuIngredientRoutes.js";
 import productIngredientRouter from "./routes/productIngredientLinkRoutes.js";
+import clientRouter from "./routes/client.js"
+import orderRouter from "./routes/orders.js"
 
 //conectar a base de datos
 async function connectDB() {
@@ -45,8 +47,7 @@ server.use("/api/category", categoryRouter);
 server.use("/api/products", productRouter);
 server.use("/api/ingredients", ingredientRouter);
 server.use("/api/productIngredient", productIngredientRouter);
-
-
-
+server.use("/api/client", clientRouter);
+server.use("/api/orders", orderRouter)
 
 export default server;

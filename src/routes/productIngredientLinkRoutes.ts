@@ -8,7 +8,7 @@ import {
 const productIngredientRouter = Router();
 
 productIngredientRouter.post(
-  "/bulk",
+  "/",
   body("product_id")
     .isInt()
     .withMessage("product_id debe ser un número entero"),

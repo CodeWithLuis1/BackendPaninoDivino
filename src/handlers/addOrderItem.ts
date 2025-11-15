@@ -148,18 +148,17 @@ export const getOrderById = async (req: Request, res: Response) => {
 export const addOrderItem = async (req: Request, res: Response) => {
   try {
     const { id } = req.params; // id del pedido
-    const { id_product, quantity, variation, sauce, removedIngredients, extras } = req.body;
+    const { id_product, quantity, removedIngredients,  } = req.body;
     const order = await Order.findByPk(id);
     if (!order)
       return res.status(404).json({ message: "Pedido no encontrado" });
 
-   const product = await Product.findByPk(id_product);
+    const product = await Product.findByPk(id_product);
     if (!product)
       return res.status(404).json({ message: "Producto no encontrado" });
 
     // Base price (por variación o precio base)
     const base_price_cents =
-      variation?.price_delta_cents ??
       Math.round(Number(product?.[0]?.price ?? 0) * 100);
     const item = await OrderItem.create({
       id_order: Number(id),
@@ -171,9 +170,6 @@ export const addOrderItem = async (req: Request, res: Response) => {
       unit_price_cents: base_price_cents,
       line_total_cents: base_price_cents * (quantity ?? 1),
     });
-
-    // Asociaciones (variación, salsa, ingredientes, extras)
-    if (variation)
 
     // Recalcular total del pedido
     await recalcOrderTotal(Number(id));
@@ -445,88 +441,4 @@ export const recalcOrderItemTotals = async (id_order_item: number) => {
   });
 
   return item;
-};
-
-export const customizeOrderItem = async (req: Request, res: Response) => {
-  try {
-    const { id, id_item } = req.params;
-    const { ingredients } = req.body;
-
-    if (!Array.isArray(ingredients)) {
-      return res.status(400).json({
-        statusCode: 400,
-        message: "Debe enviar un arreglo de ingredientes",
-      });
-    }
-
-    // Validar pedido
-    const order = await Order.findByPk(id);
-    if (!order) {
-      return res.status(404).json({ statusCode: 404, message: "Pedido no encontrado" });
-    }
-
-    // Validar item
-    const item = await OrderItem.findByPk(id_item);
-    if (!item || item.id_order !== Number(id)) {
-      return res.status(404).json({
-        statusCode: 404,
-        message: "El producto no pertenece a este pedido",
-      });
-    }
-
-    // 1) Eliminar ingredientes previos del item
-    await OrderItemIngredient.destroy({
-      where: { id_order_item: id_item }
-    });
-
-    // 2) Crear snapshot de ingredientes con reglas
-    const rows = [];
-
-    for (const ing of ingredients) {
-      rows.push({
-        id_order_item: item.id_order_item,
-        id_ingredient: ing.id_ingredient,
-        ingredient_name_snapshot: ing.ingredient_name,
-        ingredient_role: ing.ingredient_role,
-
-        // Seleccionado por el usuario
-        selected: ing.is_default_selected,
-
-        // si es base y usuario lo desmarcó => is_removed = true
-        is_removed:
-          ing.ingredient_role === "base" && !ing.is_default_selected 
-            ? true 
-            : false,
-
-        // precio extra convertido a cents
-        additional_price_cents:
-          ing.is_default_selected && ing.ingredient_role === "extra"
-            ? Math.round(Number(ing.additional_price) * 100)
-            : 0
-      });
-    }
-
-    // insertar todos
-    await OrderItemIngredient.bulkCreate(rows);
-
-    // 3) Recalcular totales del item
-    const updatedItem = await recalcOrderItemTotals(item.id_order_item);
-
-    // 4) Recalcular total del pedido
-    await recalcOrderTotal(item.id_order);
-
-    return res.json({
-      statusCode: 200,
-      message: "Ingrediente personalizados correctamente",
-      data: updatedItem
-    });
-
-  } catch (error: any) {
-    console.error("Error en customizeOrderItem:", error);
-    return res.status(500).json({
-      statusCode: 500,
-      message: "Error al personalizar ingredientes",
-      error: error.message,
-    });
-  }
 };
