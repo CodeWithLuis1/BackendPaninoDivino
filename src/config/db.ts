@@ -91,4 +91,7 @@ Payment.belongsTo(Order, { foreignKey: "orderId" });
 Client.hasMany(Order, { foreignKey: "clientId", as: "orders" });
 Order.belongsTo(Client, { foreignKey: "clientId" });
 
+Category.hasMany(Product, { foreignKey: "id_category" });
+Product.belongsTo(Category, { foreignKey: "id_category" });
+
 export default db;

@@ -3,10 +3,7 @@ import {
   Column,
   Model,
   DataType,
-  ForeignKey,
-  BelongsTo,
 } from 'sequelize-typescript';
-import Category from './Category.model.js';
 
 @Table({
   tableName: 'products',
@@ -20,12 +17,9 @@ class Product extends Model {
   })
   declare id_product: number;
 
-  @ForeignKey(() => Category)
+  // 🔥 ANTES TENÍAS @ForeignKey → QUITADO
   @Column(DataType.INTEGER)
   declare id_category: number;
-
-  @BelongsTo(() => Category)
-  declare category: Category;
 
   @Column({
     type: DataType.STRING(100),
@@ -51,7 +45,8 @@ class Product extends Model {
   })
   declare active: boolean;
 
-  // 👇 AGREGAR ESTO (para que TypeScript reconozca la propiedad)
+  // 👇 Propiedades agregadas SOLO para TypeScript (no para Sequelize)
+  declare category?: any;
   declare productIngredientLinks?: any[];
 }
 

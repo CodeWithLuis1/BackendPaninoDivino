@@ -7,8 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo, } from 'sequelize-typescript';
-import Category from './Category.model.js';
+import { Table, Column, Model, DataType, } from 'sequelize-typescript';
 let Product = class Product extends Model {
 };
 __decorate([
@@ -20,14 +19,9 @@ __decorate([
     __metadata("design:type", Number)
 ], Product.prototype, "id_product", void 0);
 __decorate([
-    ForeignKey(() => Category),
     Column(DataType.INTEGER),
     __metadata("design:type", Number)
 ], Product.prototype, "id_category", void 0);
-__decorate([
-    BelongsTo(() => Category),
-    __metadata("design:type", Category)
-], Product.prototype, "category", void 0);
 __decorate([
     Column({
         type: DataType.STRING(100),
