@@ -1,6 +1,6 @@
 import express from "express";
 import userRouter from "./routes/user.router.js";
-import db from "../src/config/db.js";
+import db from "./config/db.js";
 import colors from "colors";
 import cors from "cors";
 import { corsConfig } from "./config/cors.js";
