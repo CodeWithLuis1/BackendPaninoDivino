@@ -5,10 +5,8 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
-  HasMany,
 } from 'sequelize-typescript';
 import Category from './Category.model.js';
-import ProductIngredientLink from './ProductIngredientLink.model.js';
 
 @Table({
   tableName: 'products',
@@ -37,7 +35,7 @@ class Product extends Model {
 
   @Column(DataType.TEXT)
   declare description?: string;
-  
+
   @Column({
     type: DataType.DECIMAL(10, 2),
     allowNull: false,
@@ -53,9 +51,8 @@ class Product extends Model {
   })
   declare active: boolean;
 
-@HasMany(() => ProductIngredientLink, { as: "productIngredientLinks" })
-declare productIngredientLinks: ProductIngredientLink[];
-
+  // 👇 AGREGAR ESTO (para que TypeScript reconozca la propiedad)
+  declare productIngredientLinks?: any[];
 }
 
 export default Product;

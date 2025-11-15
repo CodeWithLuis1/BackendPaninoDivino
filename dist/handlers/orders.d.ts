@@ -1,0 +1,14 @@
+import { Request, Response } from "express";
+import OrderItem from "../models/OrderItem.modal.js";
+export declare const createOrder: (req: Request, res: Response) => Promise<any>;
+export declare const getOrders: (req: Request, res: Response) => Promise<void>;
+export declare const getOrderById: (req: Request, res: Response) => Promise<any>;
+export declare const addOrderItem: (req: Request, res: Response) => Promise<any>;
+export declare const updateOrderItem: (req: Request, res: Response) => Promise<any>;
+export declare const deleteOrderItem: (req: Request, res: Response) => Promise<any>;
+export declare const confirmOrder: (req: Request, res: Response) => Promise<any>;
+export declare const registerPayment: (req: Request, res: Response) => Promise<any>;
+export declare const recalcOrderTotal: (id_order: number) => Promise<void>;
+export declare const removeOrderItemIngredient: (req: Request, res: Response) => Promise<any>;
+export declare const recalcOrderItemTotals: (id_order_item: number) => Promise<OrderItem>;
+export declare const customizeOrderItem: (req: Request, res: Response) => Promise<any>;
