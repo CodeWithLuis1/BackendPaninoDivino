@@ -1,9 +1,4 @@
-import {
-  Table,
-  Column,
-  Model,
-  DataType,
-} from 'sequelize-typescript';
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
 @Table({
   tableName: 'products',
@@ -17,7 +12,6 @@ class Product extends Model {
   })
   declare id_product: number;
 
-  // 🔥 ANTES TENÍAS @ForeignKey → QUITADO
   @Column(DataType.INTEGER)
   declare id_category: number;
 
@@ -39,13 +33,10 @@ class Product extends Model {
   @Column(DataType.TEXT)
   declare image?: string;
 
-  @Column({
-    type: DataType.BOOLEAN,
-    defaultValue: true,
-  })
+  @Column({ type: DataType.BOOLEAN, defaultValue: true })
   declare active: boolean;
 
-  // 👇 Propiedades agregadas SOLO para TypeScript (no para Sequelize)
+  // Solo TS
   declare category?: any;
   declare productIngredientLinks?: any[];
 }

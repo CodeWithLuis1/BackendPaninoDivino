@@ -7,7 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Table, Column, Model, DataType, } from 'sequelize-typescript';
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
 let Product = class Product extends Model {
 };
 __decorate([
@@ -45,10 +45,7 @@ __decorate([
     __metadata("design:type", String)
 ], Product.prototype, "image", void 0);
 __decorate([
-    Column({
-        type: DataType.BOOLEAN,
-        defaultValue: true,
-    }),
+    Column({ type: DataType.BOOLEAN, defaultValue: true }),
     __metadata("design:type", Boolean)
 ], Product.prototype, "active", void 0);
 Product = __decorate([

@@ -1,18 +1,4 @@
-// models/Order.model.ts
-import {
-  Table,
-  Column,
-  Model,
-  DataType,
-  HasMany,
-  BelongsTo,
-  ForeignKey,
-  HasOne,
-  Default
-} from "sequelize-typescript";
-import Client from "./Client.model.js";
-import OrderItem from "./OrderItem.modal.js";
-import Payment from "./Payment.model.js";
+import { Table, Column, Model, DataType, Default } from "sequelize-typescript";
 
 export type OrderStatus = 'open' | 'pending' | 'completed' | 'cancelled';
 
@@ -21,19 +7,12 @@ export default class Order extends Model {
   @Column({ type: DataType.INTEGER, autoIncrement: true, primaryKey: true })
   declare id_order: number;
 
-  @Column({
-    type: DataType.STRING(30),
-    allowNull: false,
-    unique: true,
-  })
+  @Column({ type: DataType.STRING(30), allowNull: false, unique: true })
   declare order_number: string;
 
-  @ForeignKey(() => Client)
+  // SIN @ForeignKey
   @Column(DataType.INTEGER)
   declare id_client: number | null;
-
-  @BelongsTo(() => Client)
-  declare client: Client;
 
   @Default('open')
   @Column(DataType.ENUM('open', 'pending', 'completed', 'cancelled'))
@@ -49,9 +28,8 @@ export default class Order extends Model {
   @Column(DataType.INTEGER)
   declare total_cents: number;
 
-  @HasMany(() => OrderItem)
-  declare items: OrderItem[];
-
-  @HasOne(() => Payment)
-  declare payment: Payment;
+  // Solo TS
+  declare client?: any;
+  declare orderItems?: any[];
+  declare payment?: any;
 }

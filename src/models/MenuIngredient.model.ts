@@ -1,14 +1,7 @@
-import {
-  Table,
-  Column,
-  Model,
-  DataType,
-  HasMany,
-} from 'sequelize-typescript';
-import ProductIngredientLink from './ProductIngredientLink.model.js';
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
 @Table({
-  tableName: 'menu_ingredients', 
+  tableName: 'menu_ingredients',
   timestamps: true,
 })
 class MenuIngredient extends Model {
@@ -31,9 +24,8 @@ class MenuIngredient extends Model {
   })
   declare is_active: boolean;
 
-  // 🔗 Relaciones
-  @HasMany(() => ProductIngredientLink)
-  declare productIngredientLinks: ProductIngredientLink[];
+  // Solo TS
+  declare ingredientLinks?: any[];
 }
 
 export default MenuIngredient;

@@ -7,11 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-// models/Order.model.ts
-import { Table, Column, Model, DataType, HasMany, BelongsTo, ForeignKey, HasOne, Default } from "sequelize-typescript";
-import Client from "./Client.model.js";
-import OrderItem from "./OrderItem.modal.js";
-import Payment from "./Payment.model.js";
+import { Table, Column, Model, DataType, Default } from "sequelize-typescript";
 let Order = class Order extends Model {
 };
 __decorate([
@@ -19,22 +15,13 @@ __decorate([
     __metadata("design:type", Number)
 ], Order.prototype, "id_order", void 0);
 __decorate([
-    Column({
-        type: DataType.STRING(30),
-        allowNull: false,
-        unique: true,
-    }),
+    Column({ type: DataType.STRING(30), allowNull: false, unique: true }),
     __metadata("design:type", String)
 ], Order.prototype, "order_number", void 0);
 __decorate([
-    ForeignKey(() => Client),
     Column(DataType.INTEGER),
     __metadata("design:type", Number)
 ], Order.prototype, "id_client", void 0);
-__decorate([
-    BelongsTo(() => Client),
-    __metadata("design:type", Client)
-], Order.prototype, "client", void 0);
 __decorate([
     Default('open'),
     Column(DataType.ENUM('open', 'pending', 'completed', 'cancelled')),
@@ -53,14 +40,6 @@ __decorate([
     Column(DataType.INTEGER),
     __metadata("design:type", Number)
 ], Order.prototype, "total_cents", void 0);
-__decorate([
-    HasMany(() => OrderItem),
-    __metadata("design:type", Array)
-], Order.prototype, "items", void 0);
-__decorate([
-    HasOne(() => Payment),
-    __metadata("design:type", Payment)
-], Order.prototype, "payment", void 0);
 Order = __decorate([
     Table({ tableName: "orders", timestamps: true })
 ], Order);

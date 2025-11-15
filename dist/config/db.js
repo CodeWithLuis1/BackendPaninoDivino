@@ -12,6 +12,7 @@ import ProductIngredientLink from "../models/ProductIngredientLink.model.js";
 import MenuIngredient from "../models/MenuIngredient.model.js";
 import Order from "../models/Order.model.js";
 import Payment from "../models/Payment.model.js";
+import OrderItem from "../models/OrderItem.modal.js";
 import OrderItemIngredient from "../models/OrderItemIngredient.model.js";
 dotenv.config();
 // Obtener __dirname en ESM
@@ -24,7 +25,7 @@ const db = new Sequelize(process.env.DATABASE_URL, {
     dialectOptions: {
         ssl: {
             require: true,
-            rejectUnauthorized: false, // Necesario para Render
+            rejectUnauthorized: false,
         },
     },
     logging: false,
@@ -40,45 +41,64 @@ db.addModels([
     MenuIngredient,
     Order,
     Payment,
+    OrderItem,
     OrderItemIngredient,
 ]);
 // ****************************************
-// 🔗 ASOCIACIONES DEFINIDAS AQUÍ (NO EN MODELOS)
+// 🔗 TODAS LAS ASOCIACIONES DEFINIDAS AQUÍ
 // ****************************************
 // Role → User
 Role.hasMany(User, { foreignKey: "roleId" });
 User.belongsTo(Role, { foreignKey: "roleId" });
+// Category → Product
+Category.hasMany(Product, { foreignKey: "id_category", as: "products" });
+Product.belongsTo(Category, { foreignKey: "id_category", as: "category" });
 // Product → ProductIngredientLink
 Product.hasMany(ProductIngredientLink, {
-    foreignKey: "productId",
-    as: "productIngredientLinks", // 👈 Importante para TS + include
+    foreignKey: "product_id",
+    as: "productIngredientLinks",
 });
 ProductIngredientLink.belongsTo(Product, {
-    foreignKey: "productId",
+    foreignKey: "product_id",
+    as: "linkedProduct",
 });
 // Ingredient → ProductIngredientLink
 MenuIngredient.hasMany(ProductIngredientLink, {
-    foreignKey: "ingredientId",
+    foreignKey: "ingredient_id",
     as: "ingredientLinks",
 });
 ProductIngredientLink.belongsTo(MenuIngredient, {
-    foreignKey: "ingredientId",
+    foreignKey: "ingredient_id",
+    as: "linkedIngredient",
 });
-// Order → OrderItemIngredient
-Order.hasMany(OrderItemIngredient, {
-    foreignKey: "orderId",
-    as: "orderItems",
+// Order → OrderItem
+Order.hasMany(OrderItem, { foreignKey: "id_order", as: "items" });
+OrderItem.belongsTo(Order, { foreignKey: "id_order", as: "order" });
+// OrderItem → Product
+OrderItem.belongsTo(Product, { foreignKey: "id_product", as: "product" });
+// OrderItem → OrderItemIngredient
+OrderItem.hasMany(OrderItemIngredient, {
+    foreignKey: "id_order_item",
+    as: "ingredients",
 });
-OrderItemIngredient.belongsTo(Order, {
-    foreignKey: "orderId",
+OrderItemIngredient.belongsTo(OrderItem, {
+    foreignKey: "id_order_item",
+    as: "orderItem",
+});
+// MenuIngredient → OrderItemIngredient
+MenuIngredient.hasMany(OrderItemIngredient, {
+    foreignKey: "id_ingredient",
+    as: "ingredientItems",
+});
+OrderItemIngredient.belongsTo(MenuIngredient, {
+    foreignKey: "id_ingredient",
+    as: "ingredient",
 });
 // Order → Payment
-Order.hasOne(Payment, { foreignKey: "orderId" });
-Payment.belongsTo(Order, { foreignKey: "orderId" });
+Order.hasOne(Payment, { foreignKey: "id_order", as: "payment" });
+Payment.belongsTo(Order, { foreignKey: "id_order", as: "order" });
 // Client → Orders
-Client.hasMany(Order, { foreignKey: "clientId", as: "orders" });
-Order.belongsTo(Client, { foreignKey: "clientId" });
-Category.hasMany(Product, { foreignKey: "id_category" });
-Product.belongsTo(Category, { foreignKey: "id_category" });
+Client.hasMany(Order, { foreignKey: "id_client", as: "orders" });
+Order.belongsTo(Client, { foreignKey: "id_client", as: "client" });
 export default db;
 //# sourceMappingURL=db.js.map

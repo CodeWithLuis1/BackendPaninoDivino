@@ -7,8 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
-import Product from './Product.model.js';
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
 let Category = class Category extends Model {
 };
 __decorate([
@@ -26,10 +25,6 @@ __decorate([
     }),
     __metadata("design:type", String)
 ], Category.prototype, "name", void 0);
-__decorate([
-    HasMany(() => Product),
-    __metadata("design:type", Array)
-], Category.prototype, "products", void 0);
 Category = __decorate([
     Table({
         tableName: 'categories',

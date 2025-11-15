@@ -7,8 +7,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-import { Table, Column, Model, DataType, HasMany, } from 'sequelize-typescript';
-import ProductIngredientLink from './ProductIngredientLink.model.js';
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
 let MenuIngredient = class MenuIngredient extends Model {
 };
 __decorate([
@@ -33,10 +32,6 @@ __decorate([
     }),
     __metadata("design:type", Boolean)
 ], MenuIngredient.prototype, "is_active", void 0);
-__decorate([
-    HasMany(() => ProductIngredientLink),
-    __metadata("design:type", Array)
-], MenuIngredient.prototype, "productIngredientLinks", void 0);
 MenuIngredient = __decorate([
     Table({
         tableName: 'menu_ingredients',

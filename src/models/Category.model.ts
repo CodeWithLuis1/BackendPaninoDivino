@@ -1,5 +1,4 @@
-import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
-import Product from './Product.model.js';
+import { Table, Column, Model, DataType } from 'sequelize-typescript';
 
 @Table({
   tableName: 'categories',
@@ -19,8 +18,8 @@ class Category extends Model {
   })
   declare name: string;
 
-  @HasMany(() => Product)
-  declare products: Product[];
+  // Solo para TS
+  declare products?: any[];
 }
 
 export default Category;
