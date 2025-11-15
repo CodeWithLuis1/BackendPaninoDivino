@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Rest API´s con Express y TypeScript",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon --exec tsx src/index.ts",
     "build": "tsc",
@@ -10,10 +11,8 @@
   },
   "author": "Angel",
   "license": "ISC",
-  "type": "module",
   "devDependencies": {
     "@types/bcrypt": "^6.0.0",
-    "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.19",
     "@types/morgan": "^1.9.10",
     "nodemon": "^3.1.10",
@@ -22,10 +21,8 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
-    "@types/jsonwebtoken": "^9.0.10",
     "axios": "^1.12.2",
     "bcrypt": "^6.0.0",
-    "bcryptjs": "^3.0.2",
     "colors": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
@@ -33,10 +30,9 @@
     "express-validator": "^7.2.1",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.1",
-    "multer": "^2.0.2",
     "pg": "^8.16.3",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.7",
-    "sequelize-typescript":"^2.1.6"
-  }
+    "sequelize-typescript": "^2.1.6"
+  }
 }
